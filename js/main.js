@@ -19,5 +19,31 @@ const getRandomInteger = (minArg, maxArg) => {
 
 const checkLengthString = (str, length) => str.length <= length;
 
-getRandomInteger(2, 5);
 checkLengthString('hello', 5);
+
+const DESCRIPTIONS = [
+  'home',
+  'sun',
+  'sea',
+  'family',
+  'moon',
+  'car',
+  'cat',
+  'dog',
+  'friend',
+  'sport',
+];
+
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const getPhotoInfo = (id) => ({
+  id: id,
+  url: `photos/${id}.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
+  likes: getRandomInteger(15, 200),
+  comments: getRandomInteger(0, 200),
+});
+
+const IDS_LENGTH = 25;
+const IDS = (new Array(IDS_LENGTH)).fill(0).map((x, i) => i + 1);
+const photosList = Array.from(IDS, getPhotoInfo);
+
