@@ -44,7 +44,6 @@ const getPhotoInfo = (id) => ({
 });
 
 const IDS_LENGTH = 25;
-const IDS = (new Array(IDS_LENGTH)).fill(0).map((x, i) => i + 1);
-const getPhotosList = () => Array.from(IDS, getPhotoInfo);
+const getPhotosList = () => Array.from({length: IDS_LENGTH}, (el, i) => getPhotoInfo(i + 1));
 
 getPhotosList();
