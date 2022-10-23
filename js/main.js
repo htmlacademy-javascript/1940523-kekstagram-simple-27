@@ -1,2 +1,4 @@
-import {getPhotosList} from './data.js';
-getPhotosList();
+import {makeThumbs} from './thumbs.js';
+
+makeThumbs();
+
