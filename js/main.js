@@ -1,2 +1,7 @@
+import {makeThumbs} from './thumbs.js';
 import {getPhotosList} from './data.js';
-getPhotosList();
+
+const thumbList = getPhotosList();
+
+makeThumbs(thumbList);
+
