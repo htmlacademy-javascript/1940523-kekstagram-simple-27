@@ -32,8 +32,7 @@ const onCloseModal = () => {
 const onModalPressedEsc = (evt) => {
   if (!modalOpen.classList.contains('hidden') && evt.key === 'Escape') {
     evt.preventDefault();
-    modalOpen.classList.add('hidden');
-    body.classList.remove('modal-open');
+    onCloseModal();
   }
 };
 
