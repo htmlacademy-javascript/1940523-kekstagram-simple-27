@@ -1,3 +1,5 @@
+import {initTransformImage} from './transform-img.js';
+
 const imageForm = document.querySelector('.img-upload__form');
 const imageLoad = imageForm.querySelector('#upload-file');
 const modalOpen = imageForm.querySelector('.img-upload__overlay');
@@ -20,6 +22,7 @@ const onFormSubmit = (evt) => {
 const onOpenModal = () => {
   modalOpen.classList.remove('hidden');
   body.classList.add('modal-open');
+  initTransformImage();
 };
 
 const onCloseModal = () => {
