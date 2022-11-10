@@ -6,22 +6,72 @@ const scaleControl = overlayImage.querySelector('.scale__control--value');
 const previewImage = overlayImage.querySelector('.img-upload__preview');
 const changedPicture = previewImage.querySelector('img');
 //effects
+const effects = overlayImage.querySelector('.img-upload__effects');
 const effectsList = overlayImage.querySelector('.effects__list');
-const effectsItems = effectsList.querySelectorAll('.effects__item');
 const sliderElement = overlayImage.querySelector('.effect-level__slider');
 const effectValueInput = overlayImage.querySelector('.effect-level__value');
 const slider = overlayImage.querySelector('.img-upload__effect-level');
 const noneEffectInput = effectsList.querySelector('input.effects__radio[value="none"]');
 
-const defaultEffectValue = 100;
-const defaultScale = 100;
-const maxScale = 100;
-const minScale = 25;
-const stepScale = 25;
+const DEFAULT_EFFECT_VALUE = 100;
+const DEFAULT_SCALE = 100;
+const MAX_SCALE = 100;
+const MIN_SCALE = 25;
+const STEP_SCALE = 25;
+const DEFAULT_OPTION = {
+  range: {
+    min: 0,
+    max: 100
+  },
+  start: 100,
+  step: 1
+};
+const EFFECTS_OPTIONS = {
+  chrome: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    start: 1,
+    step: 0.1
+  },
+  sepia: {
+    range: {
+      min: 0,
+      max: 1
+    },
+    start: 1,
+    step: 0.1
+  },
+  marvin: {
+    range: {
+      min: 0,
+      max: 100
+    },
+    start: 100,
+    step: 1
+  },
+  phobos: {
+    range: {
+      min: 0,
+      max: 3
+    },
+    start: 3,
+    step: 0.1
+  },
+  heat: {
+    range: {
+      min: 1,
+      max: 3
+    },
+    start: 3,
+    step: 0.1
+  },
+};
 
 const setEffect = () => {
   const selectedEffectInput = effectsList.querySelector('input.effects__radio[name="effect"]:checked');
-  const effect = selectedEffectInput ? selectedEffectInput.value : '';
+  const effect = selectedEffectInput.value || '';
 
   switch (effect) {
     case 'chrome':
@@ -50,24 +100,24 @@ const setScale = (value) => {
 };
 
 const initScale = () => {
-  setScale(defaultScale);
+  setScale(DEFAULT_SCALE);
 };
 
 const onChangeScale = (value) => {
   const scaleValue = parseInt(scaleControl.value, 10);
   const newScaleValue = scaleValue + value;
 
-  if ((newScaleValue >= minScale) && (newScaleValue <= maxScale)) {
+  if (newScaleValue >= MIN_SCALE && (newScaleValue <= MAX_SCALE)) {
     setScale(newScaleValue);
   }
 };
 
 buttonScaleSmaller.addEventListener('click', () => {
-  onChangeScale(-stepScale);
+  onChangeScale(-STEP_SCALE);
 });
 
 buttonScaleBigger.addEventListener('click', () => {
-  onChangeScale(stepScale);
+  onChangeScale(STEP_SCALE);
 });
 
 function hideSlider() {
@@ -78,71 +128,21 @@ function showSlider() {
   slider.classList.remove('hidden');
 }
 
-function deepEffectPicture(evt) {
-  let currentMin = 0;
-  let currentMax = 100;
-  let currentStart = 100;
-  let currentStep = 1;
-
-  switch (evt.target.value) {
-    case 'chrome':
-      currentMin = 0;
-      currentMax = 1;
-      currentStep = 0.1;
-      currentStart = 1;
-      break;
-    case 'sepia':
-      currentMin = 0;
-      currentMax = 1;
-      currentStep = 0.1;
-      currentStart = 1;
-      break;
-    case 'marvin':
-      currentMin = 0;
-      currentMax = 100;
-      currentStep = 1;
-      currentStart = 100;
-      break;
-    case 'phobos':
-      currentMin = 0;
-      currentMax = 3;
-      currentStep = 0.1;
-      currentStart = 3;
-      break;
-    case 'heat':
-      currentMin = 1;
-      currentMax = 3;
-      currentStep = 0.1;
-      currentStart = 3;
-      break;
+const deepEffectPicture = (evt) => {
+  if (evt.target.value !== 'none') {
+    showSlider();
+  } else {
+    hideSlider();
   }
 
-  sliderElement.noUiSlider.updateOptions({
-    range: {
-      min: currentMin,
-      max: currentMax
-    },
-    start: currentStart,
-    step: currentStep
-  });
+  sliderElement.noUiSlider.updateOptions(EFFECTS_OPTIONS[evt.target.value] || DEFAULT_OPTION);
   setEffect();
-}
+};
 
-effectsItems.forEach((item) => {
-  const chosenEffectInput = item.querySelector('input[name="effect"]');
-  chosenEffectInput.addEventListener('change', deepEffectPicture);
-
-  item.addEventListener('click', (evt) => {
-    if (evt.target.value !== 'none') {
-      showSlider();
-    } else {
-      hideSlider();
-    }
-  });
-});
+effects.addEventListener('change', deepEffectPicture);
 
 const initTransformImage = () => {
-  effectValueInput.value = defaultEffectValue;
+  effectValueInput.value = DEFAULT_EFFECT_VALUE;
 
   if (noneEffectInput.hasAttribute('checked')) {
     hideSlider();
