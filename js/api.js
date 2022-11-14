@@ -1,5 +1,8 @@
+const LOADING_PHOTOS_URL = 'https://27.javascript.pages.academy/kekstagram-simple/data';
+const UPLOADING_PHOTO_URL = 'https://27.javascript.pages.academy/kekstagram-simple';
+
 const getPhotos = (onSuccess, onFail) => {
-  fetch('https://27.javascript.pages.academy/kekstagram-simple/data')
+  fetch(LOADING_PHOTOS_URL)
     .then((response) => {
       if (response.ok) {
         return response.json();
@@ -16,7 +19,7 @@ const getPhotos = (onSuccess, onFail) => {
 
 const sendPhoto = (onSuccess, onFail, body) => {
   fetch(
-    'https://27.javascript.pages.academy/kekstagram-simple',
+    UPLOADING_PHOTO_URL,
     {
       method: 'POST',
       body,
