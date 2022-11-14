@@ -128,7 +128,7 @@ function showSlider() {
   slider.classList.remove('hidden');
 }
 
-const deepEffectPicture = (evt) => {
+const onDeepEffectPicture = (evt) => {
   if (evt.target.value !== 'none') {
     showSlider();
   } else {
@@ -139,7 +139,7 @@ const deepEffectPicture = (evt) => {
   setEffect();
 };
 
-effects.addEventListener('change', deepEffectPicture);
+effects.addEventListener('change', onDeepEffectPicture);
 
 const initTransformImage = () => {
   effectValueInput.value = DEFAULT_EFFECT_VALUE;
