@@ -3,7 +3,7 @@ const DEFAULT_SCALE = 100;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 const STEP_SCALE = 25;
-const DEFAULT_OPTION = {
+const DefaultOptions = {
   range: {
     min: 0,
     max: 100
@@ -11,7 +11,7 @@ const DEFAULT_OPTION = {
   start: 100,
   step: 1
 };
-const EFFECTS_OPTIONS = {
+const EffectsOptions = {
   chrome: {
     range: {
       min: 0,
@@ -120,13 +120,13 @@ buttonScaleBigger.addEventListener('click', () => {
   onChangeScale(STEP_SCALE);
 });
 
-function hideSlider() {
+const hideSlider = () => {
   slider.classList.add('hidden');
-}
+};
 
-function showSlider() {
+const showSlider = () => {
   slider.classList.remove('hidden');
-}
+};
 
 const onDeepEffectPicture = (evt) => {
   if (evt.target.value !== 'none') {
@@ -135,7 +135,7 @@ const onDeepEffectPicture = (evt) => {
     hideSlider();
   }
 
-  sliderElement.noUiSlider.updateOptions(EFFECTS_OPTIONS[evt.target.value] || DEFAULT_OPTION);
+  sliderElement.noUiSlider.updateOptions(EffectsOptions[evt.target.value] || DefaultOptions);
   setEffect();
 };
 
