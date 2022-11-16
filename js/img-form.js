@@ -81,14 +81,9 @@ const onModalPressedEsc = (evt) => {
   }
 };
 
-const blockSubmitButton = () => {
-  submitButton.disabled = true;
-  submitButton.textContent = 'Сохраняю...';
-};
-
-const unblockSubmitButton = () => {
-  submitButton.disabled = false;
-  submitButton.textContent = 'Сохранить';
+const disableSubmitButton = (state) => {
+  submitButton.disabled = state;
+  submitButton.textContent = state ? 'Сохраняю...' : 'Сохранить';
 };
 
 imageLoad.addEventListener('change', onOpenModal);
@@ -102,16 +97,16 @@ const setUserFormSubmit = (onSuccess) => {
     evt.preventDefault();
     const isValid = pristine.validate();
     if (isValid) {
-      blockSubmitButton();
+      disableSubmitButton(true);
       const formData = new FormData(evt.target);
       sendPhoto(
         () => {
           onSuccess();
-          unblockSubmitButton();
+          disableSubmitButton(false);
           createSuccessPopup();
         },
         () => {
-          unblockSubmitButton();
+          disableSubmitButton(false);
           createErrorPopup();
         },
         formData

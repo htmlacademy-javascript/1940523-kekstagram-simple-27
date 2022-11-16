@@ -1,24 +1,9 @@
-//scale
-const overlayImage = document.querySelector('.img-upload__overlay');
-const buttonScaleSmaller = overlayImage.querySelector('.scale__control--smaller');
-const buttonScaleBigger = overlayImage.querySelector('.scale__control--bigger');
-const scaleControl = overlayImage.querySelector('.scale__control--value');
-const previewImage = overlayImage.querySelector('.img-upload__preview');
-const changedPicture = previewImage.querySelector('img');
-//effects
-const effects = overlayImage.querySelector('.img-upload__effects');
-const effectsList = overlayImage.querySelector('.effects__list');
-const sliderElement = overlayImage.querySelector('.effect-level__slider');
-const effectValueInput = overlayImage.querySelector('.effect-level__value');
-const slider = overlayImage.querySelector('.img-upload__effect-level');
-const noneEffectInput = effectsList.querySelector('input.effects__radio[value="none"]');
-
 const DEFAULT_EFFECT_VALUE = 100;
 const DEFAULT_SCALE = 100;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 const STEP_SCALE = 25;
-const DEFAULT_OPTION = {
+const DefaultOptions = {
   range: {
     min: 0,
     max: 100
@@ -26,7 +11,7 @@ const DEFAULT_OPTION = {
   start: 100,
   step: 1
 };
-const EFFECTS_OPTIONS = {
+const EffectsOptions = {
   chrome: {
     range: {
       min: 0,
@@ -68,6 +53,21 @@ const EFFECTS_OPTIONS = {
     step: 0.1
   },
 };
+
+//scale
+const overlayImage = document.querySelector('.img-upload__overlay');
+const buttonScaleSmaller = overlayImage.querySelector('.scale__control--smaller');
+const buttonScaleBigger = overlayImage.querySelector('.scale__control--bigger');
+const scaleControl = overlayImage.querySelector('.scale__control--value');
+const previewImage = overlayImage.querySelector('.img-upload__preview');
+const changedPicture = previewImage.querySelector('img');
+//effects
+const effects = overlayImage.querySelector('.img-upload__effects');
+const effectsList = overlayImage.querySelector('.effects__list');
+const sliderElement = overlayImage.querySelector('.effect-level__slider');
+const effectValueInput = overlayImage.querySelector('.effect-level__value');
+const slider = overlayImage.querySelector('.img-upload__effect-level');
+const noneEffectInput = effectsList.querySelector('input.effects__radio[value="none"]');
 
 const setEffect = () => {
   const selectedEffectInput = effectsList.querySelector('input.effects__radio[name="effect"]:checked');
@@ -120,13 +120,13 @@ buttonScaleBigger.addEventListener('click', () => {
   onChangeScale(STEP_SCALE);
 });
 
-function hideSlider() {
+const hideSlider = () => {
   slider.classList.add('hidden');
-}
+};
 
-function showSlider() {
+const showSlider = () => {
   slider.classList.remove('hidden');
-}
+};
 
 const onDeepEffectPicture = (evt) => {
   if (evt.target.value !== 'none') {
@@ -135,7 +135,7 @@ const onDeepEffectPicture = (evt) => {
     hideSlider();
   }
 
-  sliderElement.noUiSlider.updateOptions(EFFECTS_OPTIONS[evt.target.value] || DEFAULT_OPTION);
+  sliderElement.noUiSlider.updateOptions(EffectsOptions[evt.target.value] || DefaultOptions);
   setEffect();
 };
 
