@@ -3,7 +3,7 @@ const DEFAULT_SCALE = 100;
 const MAX_SCALE = 100;
 const MIN_SCALE = 25;
 const STEP_SCALE = 25;
-const DefaultOptions = {
+const defaultOptions = {
   range: {
     min: 0,
     max: 100
@@ -11,7 +11,7 @@ const DefaultOptions = {
   start: 100,
   step: 1
 };
-const EffectsOptions = {
+const effectsOptions = {
   chrome: {
     range: {
       min: 0,
@@ -135,7 +135,7 @@ const onDeepEffectPicture = (evt) => {
     hideSlider();
   }
 
-  sliderElement.noUiSlider.updateOptions(EffectsOptions[evt.target.value] || DefaultOptions);
+  sliderElement.noUiSlider.updateOptions(effectsOptions[evt.target.value] || defaultOptions);
   setEffect();
 };
 
