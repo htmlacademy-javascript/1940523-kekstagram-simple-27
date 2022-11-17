@@ -7,13 +7,14 @@ const imageLoad = imageForm.querySelector('#upload-file');
 const modalOpen = imageForm.querySelector('.img-upload__overlay');
 const modalClose = imageForm.querySelector('#upload-cancel');
 const submitButton = imageForm.querySelector('#upload-submit');
+const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
+const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
 
 const createSuccessPopup = () => {
-  const successPopupTemplate = document.querySelector('#success').content.querySelector('.success');
   const successPopup = successPopupTemplate.cloneNode(true);
   const successButton = successPopup.querySelector('.success__button');
-  body.appendChild(successPopup);
 
+  body.appendChild(successPopup);
   const onSuccessPopupClick = (evt) => {
     if (evt.target === successPopup || evt.target === successButton) {
       successPopup.removeEventListener('click', onSuccessPopupClick);
@@ -25,7 +26,6 @@ const createSuccessPopup = () => {
 };
 
 const createErrorPopup = () => {
-  const errorPopupTemplate = document.querySelector('#error').content.querySelector('.error');
   const errorPopup = errorPopupTemplate.cloneNode(true);
   const errorButton = errorPopup.querySelector('.error__button');
   body.appendChild(errorPopup);
@@ -50,6 +50,7 @@ const onOpenModal = () => {
   modalOpen.classList.remove('hidden');
   body.classList.add('modal-open');
   initTransformImage();
+  document.addEventListener('keydown', onModalPressedEsc);
 };
 
 const onCloseModal = () => {
@@ -57,29 +58,32 @@ const onCloseModal = () => {
   pristine.reset();
   modalOpen.classList.add('hidden');
   body.classList.remove('modal-open');
+  document.removeEventListener('keydown', onModalPressedEsc);
 };
 
-const onModalPressedEsc = (evt) => {
+function onModalPressedEsc (evt) {
   if (evt.key === 'Escape') {
     const successPopup = body.querySelector('section.success');
     const errorPopup = body.querySelector('section.error');
 
-    if (!modalOpen.classList.contains('hidden')) {
-      evt.preventDefault();
-      onCloseModal();
-    }
-
     if (successPopup) {
       evt.preventDefault();
       successPopup.remove();
+      return;
     }
 
     if (errorPopup) {
       evt.preventDefault();
       errorPopup.remove();
+      return;
+    }
+
+    if (!modalOpen.classList.contains('hidden')) {
+      evt.preventDefault();
+      onCloseModal();
     }
   }
-};
+}
 
 const disableSubmitButton = (state) => {
   submitButton.disabled = state;
@@ -87,8 +91,6 @@ const disableSubmitButton = (state) => {
 };
 
 imageLoad.addEventListener('change', onOpenModal);
-
-document.addEventListener('keydown', onModalPressedEsc);
 
 modalClose.addEventListener('click', onCloseModal);
 

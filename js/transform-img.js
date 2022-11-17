@@ -144,7 +144,7 @@ effects.addEventListener('change', onDeepEffectPicture);
 const initTransformImage = () => {
   effectValueInput.value = DEFAULT_EFFECT_VALUE;
 
-  if (noneEffectInput.hasAttribute('checked')) {
+  if (noneEffectInput.checked) {
     hideSlider();
   }
 
@@ -153,13 +153,7 @@ const initTransformImage = () => {
 };
 
 const initSlider = () => {
-  noUiSlider.create(sliderElement, {
-    range: {
-      min: 0,
-      max: 100,
-    },
-    start: 100,
-  });
+  noUiSlider.create(sliderElement, defaultOptions);
 
   sliderElement.noUiSlider.on('update', () => {
     effectValueInput.value = sliderElement.noUiSlider.get();
